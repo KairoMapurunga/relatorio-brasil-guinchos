@@ -151,7 +151,7 @@ function gerarRelatorio(){
         scales: {
           x: {
             beginAtZero: true,
-            suggestedMax: dados.length > 0 ? dados[0].qtd + 2 : 10, 
+            suggestedMax: dados.length > 0 ? Math.ceil(dados[0].qtd * 1.35) : 10, 
             ticks: { stepSize: 1, color: '#000', font: { weight: 'bold' } },
             grid: { borderDash: [5, 5] }
           },
