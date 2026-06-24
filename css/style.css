@@ -231,7 +231,7 @@ td{
 .logo-box img{
     width: 200px;
     height: auto;
-    display: block;
+    display: none;
 }
 
 /* ==========================================================================
