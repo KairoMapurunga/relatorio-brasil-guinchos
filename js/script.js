@@ -146,6 +146,11 @@ function gerarRelatorio(){
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
+        // 👇 NOVA CONFIGURAÇÃO: Empurra a área do gráfico para a esquerda, garantindo espaço para o texto
+        layout: {
+          padding: {
+            right: 80 
+          }
         plugins: {
           legend: { display: false },
           tooltip: { enabled: true }
