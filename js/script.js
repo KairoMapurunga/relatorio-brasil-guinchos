@@ -21,7 +21,6 @@ function adicionarSeguradora(){
   document.getElementById("seguradoras").appendChild(div);
 }
 
-// NOVA FUNÇÃO: Permite adicionar quantos colaboradores quiser
 function adicionarPrestador(){
   const container = document.getElementById("prestadoresContainer");
   const input = document.createElement("input");
@@ -30,7 +29,6 @@ function adicionarPrestador(){
   container.appendChild(input);
 }
 
-// Inicializa com um campo de cada na tela
 adicionarSeguradora();
 adicionarPrestador();
 
@@ -46,7 +44,6 @@ function formatarDataHora(dataString) {
 }
 
 function gerarRelatorio(){
-  // 1. Processamento das Seguradoras
   const linhas = document.querySelectorAll(".seg");
   let dados = [];
   let totalServ = 0;
@@ -85,7 +82,6 @@ function gerarRelatorio(){
     `;
   });
 
-  // 2. Processamento dos múltiplos Prestadores/Colaboradores
   const prestadoresInputs = document.querySelectorAll(".prestador-input");
   let listaPrestadores = [];
   prestadoresInputs.forEach(input => {
@@ -96,7 +92,6 @@ function gerarRelatorio(){
   
   const campoListaRelatorio = document.getElementById("rPrestadoresLista");
   if(listaPrestadores.length > 0) {
-    // Transforma cada nome em uma linha com o ícone de boneco herdando a cor do texto
     campoListaRelatorio.innerHTML = listaPrestadores.map(colaborador => `
       <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; display: inline-block; vertical-align: middle;">
@@ -110,7 +105,6 @@ function gerarRelatorio(){
     campoListaRelatorio.innerText = "-";
   }
 
-  // 3. Atualização dos Cards e Informações do topo
   const inicio = document.getElementById("inicio").value;
   const fim = document.getElementById("fim").value;
   if (inicio && fim) {
@@ -127,7 +121,6 @@ function gerarRelatorio(){
   document.getElementById("rJustificativa").innerText = document.getElementById("justificativa").value;
   document.getElementById("rPendencias").innerText = document.getElementById("pendencias").value;
 
-  // 4. Renderização do Gráfico
   if (chart) chart.destroy();
 
   chart = new Chart(
@@ -146,6 +139,11 @@ function gerarRelatorio(){
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+          padding: {
+            right: 80 
+          }
+        },
         plugins: {
           legend: { display: false },
           tooltip: { enabled: true }
@@ -187,13 +185,56 @@ function gerarRelatorio(){
 }
 
 function baixarPNG(){
-  html2canvas(
-    document.getElementById("relatorio"),
-    { scale: 2, useCORS: true, backgroundColor: "#ffffff" }
-  ).then(canvas => {
+  const elementoRelatorio = document.getElementById("relatorio");
+
+  // Guarda responsive original
+  const originalResponsive = chart.options.responsive;
+  const originalMaintainAspectRatio = chart.options.maintainAspectRatio;
+
+  chart.options.responsive = false;
+  chart.options.maintainAspectRatio = true;
+  chart.update('none');
+
+  // ✅ CORREÇÃO DO ESPAÇO EM BRANCO:
+  // Calcula a altura real do último elemento filho visível dentro do relatório,
+  // ignorando padding/min-height inflados pelo flexbox.
+  const filhos = Array.from(elementoRelatorio.children).filter(el => el.offsetHeight > 0);
+  const ultimo = filhos[filhos.length - 1];
+  const relatorioRect = elementoRelatorio.getBoundingClientRect();
+  const ultimoRect = ultimo.getBoundingClientRect();
+
+  // Altura real = distância do topo do relatório até o fundo do último filho + padding inferior
+  const paddingBottom = parseInt(getComputedStyle(elementoRelatorio).paddingBottom) || 0;
+  const alturaReal = (ultimoRect.bottom - relatorioRect.top) + paddingBottom;
+
+  html2canvas(elementoRelatorio, { 
+    scale: 2, 
+    useCORS: true, 
+    backgroundColor: "#ffffff",
+    logging: false,
+    scrollX: 0,
+    scrollY: -window.scrollY,
+    x: 0,
+    y: 0,
+    // ✅ Usa a altura real calculada em vez de getBoundingClientRect().height
+    height: alturaReal,
+    windowHeight: alturaReal
+  }).then(canvas => {
+    chart.options.responsive = originalResponsive;
+    chart.options.maintainAspectRatio = originalMaintainAspectRatio;
+    chart.update('none');
+
+    // ✅ Corta o canvas para remover qualquer pixel branco extra no fundo
+    const alturaFinal = Math.round(alturaReal * 2); // scale: 2
+    const canvasCortado = document.createElement("canvas");
+    canvasCortado.width = canvas.width;
+    canvasCortado.height = Math.min(alturaFinal, canvas.height);
+    const ctx = canvasCortado.getContext("2d");
+    ctx.drawImage(canvas, 0, 0, canvasCortado.width, canvasCortado.height, 0, 0, canvasCortado.width, canvasCortado.height);
+
     const link = document.createElement("a");
     link.download = "relatorio-brasil-guinchos.png";
-    link.href = canvas.toDataURL("image/png");
+    link.href = canvasCortado.toDataURL("image/png");
     link.click();
   });
 }
