@@ -96,7 +96,16 @@ function gerarRelatorio(){
   
   const campoListaRelatorio = document.getElementById("rPrestadoresLista");
   if(listaPrestadores.length > 0) {
-    campoListaRelatorio.innerHTML = listaPrestadores.join("<br>");
+    // Transforma cada nome em uma linha com o ícone de boneco herdando a cor do texto
+    campoListaRelatorio.innerHTML = listaPrestadores.map(colaborador => `
+      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0; display: inline-block; vertical-align: middle;">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>${colaborador}</span>
+      </div>
+    `).join("");
   } else {
     campoListaRelatorio.innerText = "-";
   }
