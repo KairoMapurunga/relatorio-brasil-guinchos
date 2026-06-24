@@ -193,12 +193,6 @@ td{
 }
 
 /* Observações */
-.infos-direita{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 .obs{
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -225,7 +219,7 @@ td{
     margin-top: 2px;
 }
 
-.obs-verde { border-color: #2ca02c; background: #f6ftf6; }
+.obs-verde { border-color: #2ca02c; background: #f6fdf6; } /* Corrigido micro erro de digitação original "f6ftf6" */
 .obs-verde h3, .obs-verde i { color: #2ca02c; }
 
 .obs-laranja { border-color: #ff8c00; background: #fffdf9; }
@@ -234,36 +228,63 @@ td{
 .obs-vermelha { border-color: #e31a1c; background: #fff9f9; }
 .obs-vermelha h3, .obs-vermelha i { color: #e31a1c; }
 
-/* Logo Box Corrigida */
-.logo-box{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 15px;
-    min-height: 60px;
-}
-
 .logo-box img{
     width: 200px;
-height: auto;
+    height: auto;
     display: block;
 }
 
-/* Divisão entre as seguradoras no painel lateral */
-.seg {
-    border-bottom: 1px dashed #b2cbf2; /* Linha pontilhada azul clara */
-    padding-bottom: 15px;
-    margin-bottom: 10px;
+/* ==========================================================================
+   CORREÇÃO: RELATÓRIO COMPACTO E DINÂMICO (ABRAÇA OS DADOS PREENCHIDOS)
+   ========================================================================== */
+
+/* Faz as caixas da direita não forçarem espaçamento esticado */
+.infos-direita {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha tudo no topo */
+    gap: 12px;                  /* Espaço limpo entre os blocos */
 }
 
-/* Remove a linha da última seguradora para não acumular com o botão */
-.seg:last-of-type {
-    border-bottom: none;
-    padding-bottom: 5px;
-    margin-bottom: 0;
+/* Remove a altura travada da tabela da esquerda */
+.cliente-box {
+    border: 1px solid #b2cbf2;
+    border-radius: 8px;
+    padding: 15px;
+    background: #fbfdff;
+    height: fit-content; /* Força a caixa a ter apenas o tamanho das linhas existentes */
 }
 
-/* Deixa o bloco de cada seguradora mais compacto */
+/* Deixa o espaçamento das linhas da tabela mais sutil */
+td {
+    padding: 8px 8px; 
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Ajusta o contêiner do rodapé para não criar vácuos gigantes */
+.rodape {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 25px;
+    margin-top: 25px; 
+    border-top: 2px solid #b2cbf2;
+    padding-top: 20px;
+}
+
+/* Cola a logo abaixo dos blocos de aviso, sem vácuo */
+.logo-box {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px; 
+    min-height: unset; 
+}
+
+/* ==========================================================================
+   CONFIGURAÇÕES DO PAINEL LATERAL (MANTIDAS E OTIMIZADAS)
+   ========================================================================== */
 .seg {
     border-bottom: 1px dashed #b2cbf2;
     padding-bottom: 8px;
