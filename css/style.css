@@ -228,10 +228,8 @@ td{
 .obs-vermelha { border-color: #e31a1c; background: #fff9f9; }
 .obs-vermelha h3, .obs-vermelha i { color: #e31a1c; }
 
-.logo-box img{
-    width: 200px;
-    height: auto;
-    display: none;
+.logo-box {
+    display: none !important;
 }
 
 /* ==========================================================================
