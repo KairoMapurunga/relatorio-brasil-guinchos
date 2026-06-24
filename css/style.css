@@ -262,3 +262,22 @@ height: auto;
     padding-bottom: 5px;
     margin-bottom: 0;
 }
+
+/* Deixa o bloco de cada seguradora mais compacto */
+.seg {
+    border-bottom: 1px dashed #b2cbf2;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.seg input, .seg select {
+    margin-bottom: 5px !important;
+    padding: 6px 10px !important;
+    font-size: 13px;
+}
+
+.seg:last-of-type {
+    border-bottom: none;
+    padding-bottom: 2px;
+    margin-bottom: 0;
+}
