@@ -19,7 +19,6 @@
         <input type="datetime-local" id="fim">
         <input id="tmc" placeholder="TMC Geral (ex: 45 minutos)">
 
-        <!-- DIVISOR 1: Seguradoras -->
         <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0 8px;">
             <div style="flex: 1; height: 1px; background: linear-gradient(to right, #b2cbf2, transparent);"></div>
             <span style="font-size: 11px; font-weight: bold; color: #0a2d72; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;">Seguradoras</span>
@@ -29,7 +28,6 @@
         <div id="seguradoras"></div>
         <button onclick="adicionarSeguradora()">+ Seguradora</button>
 
-        <!-- DIVISOR 2: Colaboradores -->
         <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0 8px;">
             <div style="flex: 1; height: 1px; background: linear-gradient(to right, #b2cbf2, transparent);"></div>
             <span style="font-size: 11px; font-weight: bold; color: #0a2d72; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;">Colaboradores</span>
@@ -39,7 +37,6 @@
         <div id="prestadoresContainer"></div>
         <button onclick="adicionarPrestador()">+ Colaborador em Destaque</button>
 
-        <!-- DIVISOR 3: Observações -->
         <div style="display: flex; align-items: center; gap: 10px; margin: 18px 0 8px;">
             <div style="flex: 1; height: 1px; background: linear-gradient(to right, #b2cbf2, transparent);"></div>
             <span style="font-size: 11px; font-weight: bold; color: #0a2d72; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;">Observações</span>
@@ -48,7 +45,7 @@
 
         <textarea id="justificativa" placeholder="Justificativa"></textarea>
         <textarea id="pendencias" placeholder="Pendências"></textarea>
-        
+
         <button onclick="gerarRelatorio()" style="background: #2ca02c; margin-top: 18px;">Gerar Relatório</button>
         <button onclick="baixarPNG()">Baixar PNG</button>
     </div>
@@ -66,7 +63,6 @@
                     <b id="rPeriodo">-</b>
                 </div>
             </div>
-
             <div class="card">
                 <i class="fa-regular fa-user icone"></i>
                 <div class="card-conteudo">
@@ -74,7 +70,6 @@
                     <b id="rResponsavel">-</b>
                 </div>
             </div>
-
             <div class="card">
                 <i class="fa-regular fa-clock icone"></i>
                 <div class="card-conteudo">
@@ -82,7 +77,6 @@
                     <b id="rTmc">-</b>
                 </div>
             </div>
-
             <div class="card">
                 <i class="fa-regular fa-file-lines icone"></i>
                 <div class="card-conteudo">
@@ -90,7 +84,6 @@
                     <b id="rServicos">-</b>
                 </div>
             </div>
-
             <div class="card">
                 <i class="fa-solid fa-dollar-sign icone-moeda"></i>
                 <div class="card-conteudo">
@@ -115,6 +108,7 @@
                         <tr>
                             <th></th>
                             <th style="text-align: left;">SERVIÇOS</th>
+                            <th>TMC</th>
                             <th>FATURADO</th>
                         </tr>
                     </thead>
@@ -125,13 +119,12 @@
             <div class="infos-direita">
                 <div class="observacoes">
                     <div class="obs obs-verde">
-                        <i class="fa-solid fa-circle-award obs-icone"></i>
+                        <i class="fa-solid fa-circle-check obs-icone"></i>
                         <div>
                             <h3>PRESTADORES EM DESTAQUE</h3>
                             <div id="rPrestadoresLista" style="font-size: 13px; color: #333; font-weight: bold; margin-top: 2px;">-</div>
                         </div>
                     </div>
-
                     <div class="obs obs-laranja">
                         <i class="fa-solid fa-circle-exclamation obs-icone"></i>
                         <div>
@@ -139,7 +132,6 @@
                             <p id="rJustificativa">-</p>
                         </div>
                     </div>
-
                     <div class="obs obs-vermelha">
                         <i class="fa-solid fa-clipboard-list obs-icone"></i>
                         <div>
