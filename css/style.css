@@ -14,6 +14,7 @@ body {
 .page {
     display: flex;
     gap: 20px;
+    align-items: flex-start;
 }
 
 /* Formulário Lateral */
@@ -26,6 +27,12 @@ body {
     height: fit-content;
 }
 
+.formulario h2 {
+    font-size: 16px;
+    color: #0a2d72;
+    margin-bottom: 8px;
+}
+
 .formulario input,
 .formulario textarea {
     width: 100%;
@@ -33,6 +40,7 @@ body {
     margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    font-size: 13px;
 }
 
 .formulario button {
@@ -45,20 +53,28 @@ body {
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 13px;
+    transition: opacity 0.2s;
+}
+
+.formulario button:hover {
+    opacity: 0.85;
 }
 
 /* Área do Relatório */
 #relatorio {
     width: 1100px;
     background: white;
-    padding: 25px 25px 15px 25px;
+    padding: 25px 25px 15px;
     border: 2px solid #b2cbf2;
     border-radius: 12px;
-    display: flex;          
-    flex-direction: column; 
-    height: auto !important;
-    min-height: 10px !important; 
-    box-sizing: border-box;
+
+    display: block;
+
+    height: fit-content;
+    min-height: unset;
+
+    align-self: flex-start;
 }
 
 .titulo {
@@ -121,14 +137,14 @@ body {
 
 /* Gráfico */
 .grafico-wrapper {
-    display: flex;
+    display: block;
     margin-top: 25px;
-    align-items: center;
 }
 
 .grafico-container {
-    flex-grow: 1;
+    width: 100%;
     height: 290px;
+    position: relative;
 }
 
 .eixo-x-titulo {
@@ -145,12 +161,16 @@ body {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 25px;
-    margin-top: 25px; 
+
+    margin-top: 25px;
     border-top: 2px solid #b2cbf2;
     padding-top: 20px;
-    align-items: start;       
-    align-content: start;     
-    height: auto !important;
+
+    align-items: start;
+    align-content: start;
+
+    height: auto;
+    min-height: 0;
 }
 
 .subtitulo-tabela {
@@ -170,7 +190,7 @@ body {
     border-radius: 8px;
     padding: 15px;
     background: #fbfdff;
-    height: fit-content; 
+    height: fit-content;
 }
 
 table {
@@ -183,6 +203,11 @@ th {
     font-size: 11px;
     padding: 8px;
     border-bottom: 2px solid #ddd;
+    text-align: center;
+}
+
+th:nth-child(2) {
+    text-align: left;
 }
 
 td {
@@ -190,6 +215,26 @@ td {
     border-bottom: 1px solid #eee;
     font-size: 14px;
     font-weight: bold;
+    text-align: center;
+}
+
+td:nth-child(2) {
+    text-align: left;
+}
+
+.td-nome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.td-tmc {
+    color: #0a2d72;
+    font-size: 13px;
+}
+
+.td-faturado {
+    color: #2ca02c;
 }
 
 .indicador-cor {
@@ -197,26 +242,38 @@ td {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    margin-right: 8px;
-    vertical-align: middle;
+    flex-shrink: 0;
 }
 
-/* Observações / Avisos da Direita */
+/* Observações */
 .infos-direita {
     display: flex;
     flex-direction: column;
+
     justify-content: flex-start;
+    align-items: stretch;
+
     gap: 12px;
-    height: auto !important;
-    min-width: 0;
-    overflow: hidden;
+
+    height: auto;
+    min-height: 0;
+
+    overflow: visible;
+}
+
+.observacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    height: auto;
+    min-height: 0;
 }
 
 .obs {
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 10px 15px;
-    margin-bottom: 0px;
     display: flex;
     align-items: flex-start;
     gap: 15px;
@@ -231,6 +288,7 @@ td {
 .obs-icone {
     font-size: 24px;
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .obs h3 {
@@ -239,7 +297,7 @@ td {
     text-transform: uppercase;
 }
 
-.obs p {
+.obs p, .obs div[id] {
     font-size: 13px;
     color: #333;
     margin-top: 2px;
@@ -248,8 +306,8 @@ td {
     white-space: normal;
 }
 
-.obs-verde { border-color: #2ca02c; background: #f6fdf6; }
-.obs-verde h3, .obs-verde i { color: #2ca02c; }
+.obs-verde  { border-color: #2ca02c; background: #f6fdf6; }
+.obs-verde h3, .obs-verde i  { color: #2ca02c; }
 
 .obs-laranja { border-color: #ff8c00; background: #fffdf9; }
 .obs-laranja h3, .obs-laranja i { color: #ff8c00; }
@@ -257,33 +315,82 @@ td {
 .obs-vermelha { border-color: #e31a1c; background: #fff9f9; }
 .obs-vermelha h3, .obs-vermelha i { color: #e31a1c; }
 
-/* Logo Box */
-.logo-box {
-    display: flex !important;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.logo-box img {
-    display: none !important;
-}
-
-/* Painel Lateral - Seguradoras */
+/* Seguradoras no painel */
 .seg {
-    border-bottom: 1px dashed #b2cbf2;
-    padding-bottom: 8px;
-    margin-bottom: 8px;
+    border: 1px solid #d0e0f7;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 10px;
+    background: #f8fbff;
 }
 
-.seg input, .seg select {
-    margin-bottom: 5px !important;
-    padding: 6px 10px !important;
-    font-size: 13px;
+.seg-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
 }
 
-.seg:last-of-type {
-    border-bottom: none;
-    padding-bottom: 2px;
-    margin-bottom: 0;
+.seg-titulo {
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-remover {
+    background: none !important;
+    border: none !important;
+    color: #e31a1c !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    width: auto !important;
+    margin: 0 !important;
+    line-height: 1;
+}
+
+.seg input {
+    margin-top: 6px !important;
+    padding: 7px 10px !important;
+    font-size: 13px !important;
+    background: white;
+}
+
+/* Prestadores */
+.prestador-item {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+    align-items: center;
+}
+
+.prestador-item input {
+    flex: 1;
+    margin-top: 0 !important;
+}
+
+.prestador-item button {
+    width: auto !important;
+    margin-top: 0 !important;
+    padding: 8px 12px !important;
+    background: #e31a1c !important;
+}
+
+/* Evita espaços fantasmas no final da captura */
+
+#relatorio > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+.obs:last-child {
+    margin-bottom: 0 !important;
+}
+
+.observacoes:last-child {
+    margin-bottom: 0 !important;
+}
+
+.rodape:last-child {
+    margin-bottom: 0 !important;
 }
