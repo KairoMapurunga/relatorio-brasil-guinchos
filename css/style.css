@@ -303,7 +303,7 @@ td:nth-child(2) {
     margin-top: 2px;
     word-break: break-word;
     overflow-wrap: break-word;
-    white-space: normal;
+    white-space: pre-line;
 }
 
 .obs-verde  { border-color: #2ca02c; background: #f6fdf6; }
